@@ -283,16 +283,18 @@ func (m *manager) CommitConfiguration(_, to config.Configuration) (handled bool)
 			}
 		}
 
-		// v6 multicasts
-		v6Identity := ipv6Identity(to.Options.LocalAnnMCAddr)
-		if _, ok := m.finders[v6Identity]; !ok {
-			mcd, err := NewLocal(m.myID, to.Options.LocalAnnMCAddr, m.addressLister, m.evLogger)
-			if err != nil {
-				l.Warnln("IPv6 local discovery:", err)
-			} else {
-				m.addLocked(v6Identity, mcd, 0, 0)
-			}
-		}
+                if to.Options.LocalMCEnabled {
+                    // v6 multicasts
+                    v6Identity := ipv6Identity(to.Options.LocalAnnMCAddr)
+                    if _, ok := m.finders[v6Identity]; !ok {
+                        mcd, err := NewLocal(m.myID, to.Options.LocalAnnMCAddr, m.addressLister, m.evLogger)
+                        if err != nil {
+                            l.Warnln("IPv6 local discovery:", err)
+                        } else {
+                            m.addLocked(v6Identity, mcd, 0, 0)
+                        }
+                    }
+                }
 	}
 
 	return true

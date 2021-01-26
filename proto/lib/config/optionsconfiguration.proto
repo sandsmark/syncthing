@@ -67,6 +67,8 @@ message OptionsConfiguration {
     // attempting outgoing connections.
     int32 connection_limit_max = 52;
 
+    bool            local_multicast_enabled                  = 53 [(ext.goname) = "LocalMCEnabled", (ext.xml) = "localMCEnabled", (ext.json) = "localMCEnabled", (ext.default) = "true"];
+
     // Legacy deprecated
     bool            upnp_enabled           = 9000 [deprecated = true, (ext.goname) = "DeprecatedUPnPEnabled"];
     int32           upnp_lease_m           = 9001 [deprecated = true, (ext.goname) = "DeprecatedUPnPLeaseM", (ext.xml) = "upnpLeaseMinutes,omitempty"];
